@@ -1,0 +1,25 @@
+#wizards {
+    border-collapse: collapse;
+    width: 90%;
+}
+
+#wizards td,
+#wizards th {
+    border: 1px solid #ddd;
+    padding: 6px;
+}
+
+#wizards tr:nth-child(even) {
+    background-color: rgb(61, 61, 61);
+}
+
+#wizards tr:hover {
+    background-color: rgb(31, 19, 19);
+    cursor: pointer;
+}
+
+#wizards th {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #380514c5;
+}
