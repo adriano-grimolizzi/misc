@@ -1,9 +1,9 @@
-import { Formik, Field, Form, ErrorMessage } from 'formik'
+import { Formik, Field, Form } from 'formik'
 import * as Yup from 'yup';
 import { useNavigate } from "react-router-dom"
 
 import { createWizard } from '../WizardService'
-import { Button, Container, TextField } from '@material-ui/core';
+import { Button, Container, Grid, TextField } from '@material-ui/core';
 
 function CreateWizard() {
 
@@ -24,32 +24,60 @@ function CreateWizard() {
           initialValues={initialValues}
           validationSchema={validationSchema}
           validateOnMount={true}
+          isInitialValid={false}
           onSubmit={values => {
             createWizard(values)
             navigate('/wizard-list/')
           }}
         >
           {({ isValid, isSubmitting }) => (
-            <Form>              
-              <label htmlFor="name">Name</label>
-              <Field name='name' type='text' />
-              <ErrorMessage name='name' />
-              <br />
-
-              <label htmlFor="age">Age</label>
-              <Field name='age' type='number' />
-              <ErrorMessage name='age' />
-              <br />
-
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                disabled={!isValid || isSubmitting}
-              >
-                Submit
-              </Button>
+            <Form>
+              <Field name='name'>
+                {({ field, meta: { error, value, initialValue, touched } }) => (
+                  <TextField
+                    variant="outlined"
+                    margin="dense"
+                    fullWidth
+                    required
+                    autoFocus
+                    id="name"
+                    type="text"
+                    placeholder='Name'
+                    error={(touched || value !== initialValue) && Boolean(error)}
+                    helperText={touched || value !== initialValue ? error : ''}
+                    {...field}
+                  />
+                )}
+              </Field>
+              <Field name='age'>
+                {({ field, meta: { error, value, initialValue, touched } }) => (
+                  <TextField
+                    variant="outlined"
+                    margin="dense"
+                    fullWidth
+                    required
+                    id="age"
+                    type="number"
+                    placeholder='Age'
+                    error={(touched || value !== initialValue) && Boolean(error)}
+                    helperText={touched || value !== initialValue ? error : ''}
+                    {...field}
+                  />
+                )}
+              </Field>
+              <Grid container spacing={2} direction="row" alignItems="center">
+                <Grid item>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    disabled={!isValid || isSubmitting}
+                  >
+                    Submit
+                  </Button>
+                </Grid>
+              </Grid>
             </Form>
           )}
         </Formik>
